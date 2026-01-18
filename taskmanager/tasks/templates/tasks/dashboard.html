@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard | Task Manager</title>
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'tasks/css/dashboard.css' %}">
+</head>
+<body>
+
+<!-- 🔔 GLOBAL MESSAGES (REQUIRED) -->
+{% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+            <div class="message {{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+
+<div class="dashboard-container">
+
+    <!-- Header -->
+    <div class="dashboard-header">
+        <h2>Your Tasks</h2>
+        <div class="actions">
+            <a href="{% url 'add_task' %}" class="btn add">+ Add Task</a>
+            <a href="{% url 'logout' %}" class="btn logout">Logout</a>
+        </div>
+    </div>
+
+    <!-- Task List -->
+    {% if tasks %}
+        <ul class="task-list">
+            {% for task in tasks %}
+                <li class="task-item">
+                    <span class="task-title">{{ task.title }}</span>
+
+                    <div class="task-actions">
+                        <a href="{% url 'edit_task' task.id %}" class="edit">Edit</a>
+
+                        <!-- Delete should be POST (real-world) -->
+                        <form method="post" action="{% url 'delete_task' task.id %}" class="delete-form">
+                            {% csrf_token %}
+                            <button type="submit" class="delete">Delete</button>
+                        </form>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="no-task">No tasks added yet.</p>
+    {% endif %}
+
+</div>
+
+</body>
+</html>

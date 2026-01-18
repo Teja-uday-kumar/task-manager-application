@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Task | Task Manager</title>
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'tasks/css/task_form.css' %}">
+</head>
+<body>
+
+<!-- Messages -->
+{% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+            <div class="message {{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+
+<div class="form-container">
+
+    <h2>{{ form.instance.pk|yesno:"Edit Task,Add Task" }}</h2>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="form-field">
+            {{ form.title.label_tag }}
+            {{ form.title }}
+        </div>
+
+        <button type="submit">Save Task</button>
+
+        <a href="{% url 'dashboard' %}" class="cancel">Cancel</a>
+    </form>
+
+</div>
+
+</body>
+</html>

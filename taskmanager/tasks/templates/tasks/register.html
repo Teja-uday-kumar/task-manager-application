@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register | Task Manager</title>
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'tasks/css/register.css' %}">
+</head>
+<body>
+
+<div class="app-wrapper">
+
+    <!-- App Branding -->
+    <div class="app-header">
+        <h1>Task Manager</h1>
+        <p>Create your account to manage tasks efficiently</p>
+    </div>
+
+    <!-- Register Card -->
+    <div class="register-container">
+        <h2>Create Account</h2>
+
+        <!-- Messages -->
+        {% if messages %}
+            {% for message in messages %}
+                <div class="message {{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+
+            <div class="input-group">
+                <label>Username</label>
+                <input type="text" name="username" placeholder="Choose a username" required>
+            </div>
+
+            <div class="input-group">
+                <label>Password</label>
+                <input type="password" name="password1" placeholder="Create a password" required>
+            </div>
+
+            <div class="input-group">
+                <label>Confirm Password</label>
+                <input type="password" name="password2" placeholder="Re-enter password" required>
+            </div>
+
+            <button type="submit">Register</button>
+        </form>
+
+        <p class="login-text">
+            Already have an account?
+            <a href="{% url 'login' %}">Login</a>
+        </p>
+    </div>
+
+</div>
+
+</body>
+</html>
